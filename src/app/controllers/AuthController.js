@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import authConfig from '../../config/auth';
 import User from '../models/User';
 
-class SessionController {
+class AuthController {
   async store(req, res) {
     const schema = Yup.object().shape({
       email: Yup.string()
@@ -43,4 +43,4 @@ class SessionController {
   }
 }
 
-export default new SessionController();
+export default new AuthController();
