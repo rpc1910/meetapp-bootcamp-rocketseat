@@ -3,6 +3,7 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const User = use('App/Models/User');
+const Hash = use('Hash');
 
 /**
  * Resourceful controller for interacting with users
@@ -45,10 +46,25 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ request, auth }) {
-    const data = request.only(['name', 'email', 'password', 'old_password']);
+  async update({ request, response, auth }) {
+    const data = request.only(['name', 'email', 'password']);
 
-    return data;
+    const checkPassword = await Hash.verify(
+      request.input('old_password'),
+      auth.user.password
+    );
+
+    if (!checkPassword) {
+      return response.status(400).json({
+        status: 'error',
+        message: 'Current password could not be verified! Please try again.',
+      });
+    }
+
+    auth.user.merge(data);
+    await auth.user.save();
+
+    return auth.user;
   }
 }
 

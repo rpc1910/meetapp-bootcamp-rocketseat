@@ -19,5 +19,5 @@ Route.post('register', 'UserController.store').validator('StoreUser');
 
 Route.group(() => {
   Route.get('me', 'UserController.show');
-  Route.put('me', 'UserController.update');
+  Route.put('me', 'UserController.update').validator('UpdateUser');
 }).middleware(['auth']);
