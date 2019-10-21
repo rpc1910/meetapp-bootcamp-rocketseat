@@ -2,6 +2,8 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const Meetup = use('App/Models/Meetup');
+
 /**
  * Resourceful controller for interacting with meetups
  */
@@ -12,21 +14,13 @@ class MeetupController {
    *
    * @param {object} ctx
    * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async index({ request, response, view }) {}
-
-  /**
-   * Render a form to be used for creating a new meetup.
-   * GET meetups/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create({ request, response, view }) {}
+  async index({ params }) {
+    const page = params.page || 1;
+    return Meetup.query()
+      .orderBy('date', 'asc')
+      .paginate(page);
+  }
 
   /**
    * Create/save a new meetup.
@@ -36,7 +30,21 @@ class MeetupController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {}
+  async store({ request, auth }) {
+    const post = request.only([
+      'name',
+      'description',
+      'location',
+      'latitude',
+      'longitude',
+      'date',
+      'file_id',
+    ]);
+
+    post.date = new Date(post.date);
+
+    return auth.user.meetups().create(post);
+  }
 
   /**
    * Display a single meetup.
@@ -47,18 +55,12 @@ class MeetupController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params }) {
+    const meetup = await Meetup.findOrFail(params.id);
+    await meetup.load('owner.avatar');
 
-  /**
-   * Render a form to update an existing meetup.
-   * GET meetups/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit({ params, request, response, view }) {}
+    return meetup;
+  }
 
   /**
    * Update meetup details.

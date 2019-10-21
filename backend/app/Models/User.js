@@ -36,6 +36,14 @@ class User extends Model {
   static get hidden() {
     return ['password'];
   }
+
+  avatar() {
+    return this.belongsTo('App/Models/File');
+  }
+
+  meetups() {
+    return this.hasMany('App/Models/Meetup');
+  }
 }
 
 module.exports = User;

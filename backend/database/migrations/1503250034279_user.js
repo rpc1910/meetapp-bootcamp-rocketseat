@@ -11,6 +11,11 @@ class UserSchema extends Schema {
         .notNullable()
         .unique();
       table.string('password', 60).notNullable();
+      table
+        .integer('file_id')
+        .unsigned()
+        .references('id')
+        .inTable('files');
       table.timestamps();
     });
   }

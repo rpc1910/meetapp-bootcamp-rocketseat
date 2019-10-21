@@ -7,6 +7,7 @@ class FileSchema extends Schema {
       table.increments();
       table.string('name').notNullable();
       table.string('path').notNullable();
+      table.enum('type', ['profile', 'banner']);
       table.timestamps();
     });
   }

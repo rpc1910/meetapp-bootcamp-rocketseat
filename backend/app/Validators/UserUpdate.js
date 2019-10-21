@@ -1,4 +1,4 @@
-class UpdateUser {
+class UserUpdate {
   get rules() {
     const userId = this.ctx.auth.user.id;
 
@@ -11,4 +11,4 @@ class UpdateUser {
   }
 }
 
-module.exports = UpdateUser;
+module.exports = UserUpdate;

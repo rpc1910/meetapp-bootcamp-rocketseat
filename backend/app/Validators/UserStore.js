@@ -1,4 +1,4 @@
-class StoreUser {
+class UserStore {
   get rules() {
     return {
       name: 'required',
@@ -8,4 +8,4 @@ class StoreUser {
   }
 }
 
-module.exports = StoreUser;
+module.exports = UserStore;

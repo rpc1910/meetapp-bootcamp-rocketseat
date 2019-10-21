@@ -35,7 +35,9 @@ class UserController {
    * @param {View} ctx.view
    */
   async show({ auth }) {
-    return auth.user;
+    const user = await User.find(auth.user.id);
+    await user.load('avatar');
+    return user;
   }
 
   /**
