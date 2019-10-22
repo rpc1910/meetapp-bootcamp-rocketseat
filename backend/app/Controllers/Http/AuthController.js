@@ -15,9 +15,7 @@ class AuthController {
    */
   async store({ request, auth }) {
     const { email, password } = request.all();
-    const token = auth.attempt(email, password);
-
-    return token;
+    return auth.attempt(email, password);
   }
 }
 

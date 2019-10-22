@@ -17,12 +17,12 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request }) {
+  async store({ request, auth }) {
     const data = request.only(['name', 'email', 'password']);
 
     const user = await User.create(data);
 
-    return user;
+    return auth.generate(user);
   }
 
   /**
