@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 import { signUpRequest } from '~/store/modules/auth/actions';
+import Logo from '~/components/Logo';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('O nome é obrigatório'),
@@ -25,7 +26,7 @@ export default function Signup() {
 
   return (
     <>
-      <h1>MeetApp</h1>
+      <Logo />
       <Form schema={schema} onSubmit={handleSubmit}>
         <Input name="name" type="text" placeholder="Nome completo" />
         <Input name="email" type="email" placeholder="Digite seu e-mail" />

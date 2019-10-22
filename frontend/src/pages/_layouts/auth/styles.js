@@ -14,12 +14,6 @@ export const Container = styled.div`
   max-width: 315px;
   text-align: center;
 
-  h1 {
-    color: #f94d6a;
-    font-size: 50px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  }
-
   form {
     display: flex;
     flex-direction: column;
