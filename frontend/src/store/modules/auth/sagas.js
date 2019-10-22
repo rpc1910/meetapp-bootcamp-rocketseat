@@ -13,6 +13,8 @@ export function* signIn({ payload }) {
 
     const { token } = response.data;
 
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+
     yield put(signInSuccess(token));
     history.push('/dashboard');
   } catch (e) {
@@ -33,6 +35,8 @@ export function* signUp({ payload }) {
 
     const { token } = response.data;
 
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+
     yield put(signInSuccess(token));
     toast.success('Cadastro realizado com sucesso!');
     history.push('/dashboard');
@@ -43,7 +47,17 @@ export function* signUp({ payload }) {
   }
 }
 
+function setToken({ payload }) {
+  if (!payload) return;
+
+  const { token } = payload.auth;
+  if (token) {
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+  }
+}
+
 export default all([
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('@auth/SIGN_UP_REQUEST', signUp),
+  takeLatest('persist/REHYDRATE', setToken),
 ]);

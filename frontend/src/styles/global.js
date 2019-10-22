@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 import 'react-toastify/dist/ReactToastify.css';
+import 'axios-progress-bar/dist/nprogress.css';
 
 export default createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
